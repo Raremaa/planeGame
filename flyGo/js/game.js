@@ -25,9 +25,11 @@ var sHeight;//canvas高度
 var starSky;//星空背景
 var queue;//preload插件实现预加载类
 var spriteSheet;//雪碧图
-var part = 1;//游戏玩法
+var part = 1;//游戏关卡
 var isPerfect = true;//是否开启高画质
 var fps = 60; //fps
+var firesEnemyArray = new Array(); //敌军子弹
+
 //游戏资源实现：
 
 /**
@@ -45,12 +47,13 @@ function init() {
     queue = new createjs.LoadQueue();
     createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);//注册声音,可进行预加载与回放
     queue.installPlugin(createjs.Sound);
-    queue.on("complete",handleComplete);
+    queue.on("complete", handleComplete);
     queue.loadManifest([
-        {id:"sprite",src:"./images/sprite.png"},
-        {id:"shot",src:"./sound/shot.mp3"},
-        {id:"explosion",src:"./sound/explosion.mp3"},
-        {id:"bgm",src:"./sound/bgm.ogg"}
+        {id: "sprite", src: "./images/sprite.png"},
+        {id: "fireEnemy", src: "./images/fireEnemy.png"},
+        {id: "shot", src: "./sound/shot.mp3"},
+        {id: "explosion", src: "./sound/explosion.mp3"},
+        {id: "bgm", src: "./sound/bgm.ogg"}
     ]);
 }
 
@@ -80,14 +83,14 @@ function buildGame() {
  * alpha 透明度
  */
 function buildSpace() {
-    var i,star,w,h,alpha;
-    for(i=0;i<200;i++){
+    var i, star, w, h, alpha;
+    for (i = 0; i < 200; i++) {
         starSky = new createjs.Container();
         star = new createjs.Shape();
-        w = Math.floor(Math.random()*sWidth);
-        h = Math.floor(Math.random()*sHeight);
+        w = Math.floor(Math.random() * sWidth);
+        h = Math.floor(Math.random() * sHeight);
         alpha = Math.random();
-        star.graphics.beginFill("#FFF").drawCircle(0,0,1);
+        star.graphics.beginFill("#FFF").drawCircle(0, 0, 1);
         star.x = w;
         star.y = h;
         star.alpha = alpha;
@@ -105,12 +108,12 @@ function buildSpace() {
  * scoreText 分数
  */
 function buildMsg() {
-    var livesText = new createjs.Text("lives:"+lives,"40px console","#FFF");
+    var livesText = new createjs.Text("lives:" + lives, "40px console", "#FFF");
     livesText.x = 5;
     livesText.y = 10;
     stage.addChild(livesText);
 
-    var scoreText = new createjs.Text("score:"+score,"40px console","#FFF");
+    var scoreText = new createjs.Text("score:" + score, "40px console", "#FFF");
     scoreText.x = 860;
     scoreText.y = 10;
     stage.addChild(scoreText);
@@ -120,9 +123,9 @@ function buildMsg() {
  * 根据雪碧图创建游戏图片资源
  */
 function buildSpriteSheet() {
-    var data ={
-        images:[queue.getResult("sprite")],
-        frames:[
+    var data = {
+        images: [queue.getResult("sprite")],
+        frames: [
             [482, 401, 71, 51, 0, 0, 0],
             [71, 401, 71, 51, 0, 0, 0],
             [142, 401, 71, 51, 0, 0, 0],
@@ -303,7 +306,7 @@ function buildSpriteSheet() {
             [1360, 302, 375, 53, 0, 0, 0]
 
         ],
-        animations:{
+        animations: {
             "1": {"frames": [138], "speed": 1},
             "2": {"frames": [139], "speed": 1},
             "4": {"frames": [141], "speed": 1},
@@ -525,16 +528,27 @@ function buildSpriteSheet() {
         }
     };
     spriteSheet = new createjs.SpriteSheet(data);
+    //
+    // var data2 = {
+    //     images: [queue.getResult("fireEnemy")],
+    //     frames: [
+    //         [0, 0, 32, 9, 0, 0, 0]
+    //     ],
+    //     animations: {
+    //         "fireE" : 0
+    //     }
+    // };
+    // firesEnemySprite = new createjs.SpriteSheet(data2);
 }
 
 /**
  * 创建玩家战机
  */
 function buildPlayer() {
-    player = new createjs.Sprite(spriteSheet,"heroIdle");
-    player.rotation=90;
+    player = new createjs.Sprite(spriteSheet, "heroIdle");
+    player.rotation = 90;
     player.x = player.getBounds().height;
-    player.y = (sHeight/2) - ((player.getBounds().width)/2);
+    player.y = (sHeight / 2) - ((player.getBounds().width) / 2);
     stage.addChild(player);
     /*临时点，用作辅助定位目标对象坐标
     var shapeTemp = new createjs.Shape();
@@ -548,17 +562,17 @@ function buildPlayer() {
  * part2_x 第二阶段敌人
  */
 function buildEnemy() {
-    var part1_1,part1_2,part2_1,part2_2,part2_3,part2_4;
-    part1_1 = new createjs.Sprite(spriteSheet,"enemy1Idle");
-    part1_2 = new createjs.Sprite(spriteSheet,"enemy2Idle");
+    var part1_1, part1_2, part2_1, part2_2, part2_3, part2_4;
+    part1_1 = new createjs.Sprite(spriteSheet, "enemy1Idle");
+    part1_2 = new createjs.Sprite(spriteSheet, "enemy2Idle");
     part1_1.rotation = 90;
     part1_2.rotation = 90;
 
-    part2_1 = new createjs.Sprite(spriteSheet,"asteroid1");
-    part2_2 = new createjs.Sprite(spriteSheet,"asteroid2");
-    part2_3 = new createjs.Sprite(spriteSheet,"asteroid3");
-    part2_4 = new createjs.Sprite(spriteSheet,"asteroid4");
-    enemyClip.push(part1_1,part1_2,part2_1,part2_2,part2_3,part2_4);
+    part2_1 = new createjs.Sprite(spriteSheet, "asteroid1");
+    part2_2 = new createjs.Sprite(spriteSheet, "asteroid2");
+    part2_3 = new createjs.Sprite(spriteSheet, "asteroid3");
+    part2_4 = new createjs.Sprite(spriteSheet, "asteroid4");
+    enemyClip.push(part1_1, part1_2, part2_1, part2_2, part2_3, part2_4);
     buildEnemies();
 }
 
@@ -569,32 +583,43 @@ function buildEnemy() {
  * 生成min~max之间的随机数公式：Math.floor(Math.random()*(max-min+1)+min)
  */
 function buildEnemies() {
-    var i,temp;
-    for(i=0;i<20;i++) {
-        if(part == 1){
+    var i, temp;
+    for (i = 0; i < 20; i++) {
+        if (part == 1) {
+            //firesEnemy = new createjs.Sprite(firesEnemySprite, "fireE");//子弹Shape
             //随机从上下两侧产生飞机
-            // temp = Math.floor(Math.random() * 2);
-            // enemyClip[temp].x = Math.floor(Math.random() * 701 + 300);//x坐标随机300~1000之间
-            // var tempY = Math.random()*600;
-            // if(temp == 0) {
-            //     enemyClip[temp].y = -(enemyClip[temp].getBounds().width);
-            // }else{
-            //     enemyClip[temp].y = 600;
-            // }
-            // var en = enemyClip[temp].clone();
-            // enemy.push(en);
-            // createjs.Tween.get(en).wait(5000*i).to({x:0,y:tempY},5000,createjs.Ease.sineInOut(-2));
-            // stage.addChild(en);
+            temp = Math.floor(Math.random() * 2);
+            enemyClip[temp].x = Math.floor(Math.random() * 701 + 300);//x坐标随机300~1000之间
+            var tempY = Math.random() * 600;
+            if (temp == 0) {
+                enemyClip[temp].y = -(enemyClip[temp].getBounds().width);
+            } else {
+                enemyClip[temp].y = 600;
+            }
+            var en = enemyClip[temp].clone();
+            enemy.push(en);
+            createjs.Tween.get(en).wait(5000 * i).to({x: 0, y: tempY}, 5000, createjs.Ease.sineInOut(-2));
+            //firesEnemy.x = (en.x)-(en.getBounds().height);
+            //firesEnemy.y = (en.y)+((en.getBounds().width)/2);
+            //firesEnemyArray.push(firesEnemy);
+            //createjs.Tween.get(firesEnemy).wait(5000 * i).to({x: 0}, 5000, createjs.Ease.linear);
+            stage.addChild(en);
+            //stage.addChild(firesEnemy);
+            var firesEnemy = new createjs.Shape();
+            //不加endFill在处理多个图形会遇到问题
+            firesEnemy.graphics.beginFill("#FF0").drawRect(0,0,2,5).endFill();
+            firesEnemy.x = (en.x)-(en.getBounds().height);
+            firesEnemy.y = (en.y)+((en.getBounds().width)/2);
+            firesEnemyArray.push(firesEnemy);
+            stage.addChild(firesEnemy);
 
             //随机从最右侧产生飞机
             temp = Math.floor(Math.random() * 2);
-            enemyClip[temp].x = Math.floor(Math.random() * enemyClip[temp].getBounds().height+1050);//x坐标随机1000~1000+敌机长度之间
-            enemyClip[temp].y = Math.floor(Math.random()*(601+enemyClip[temp].getBounds().width)-enemyClip[temp].getBounds().width);
-            console.log(enemyClip[temp].x)
-            console.log(enemyClip[temp].y)
+            enemyClip[temp].x = Math.floor(Math.random() * enemyClip[temp].getBounds().height + 1050);//x坐标随机1000~1000+敌机长度之间
+            enemyClip[temp].y = Math.floor(Math.random() * (601 + enemyClip[temp].getBounds().width) - enemyClip[temp].getBounds().width);
             var en = enemyClip[temp].clone();
             enemy.push(en);
-            createjs.Tween.get(en).to({x:0,y:Math.random()*600},1,createjs.Ease.sineInOut(-2));
+            createjs.Tween.get(en).wait(5000 * i).to({x: 0, y: Math.random() * 600}, 4000, createjs.Ease.circInOut(-2));
             stage.addChild(en);
 
         }
@@ -616,10 +641,10 @@ function setControl() {
 /**
  * 通过按下键盘操作做出反馈
  */
-function handleKeyDown(e){
+function handleKeyDown(e) {
     //是为了更好的兼容IE浏览器和非ie浏览器。
     e = !e ? window.event : e;
-    switch(e.keyCode){
+    switch (e.keyCode) {
         case ARROW_KEY_UP:
             upKeyDown = true;
             break;
@@ -635,16 +660,17 @@ function handleKeyDown(e){
         case SPACE_KEY:
             spaceKeyDown = true;
             break;
-    };
-    handleKey(upKeyDown,downKeyDown,spaceKeyDown,leftKeyDown,rightKeyDown);
+    }
+    ;
+    handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
 }
 
 /**
  * 通过松开键盘操作做出反馈
  */
-function handleKeyUp(e){
+function handleKeyUp(e) {
     e = !e ? window.event : e;
-    switch(e.keyCode){
+    switch (e.keyCode) {
         case ARROW_KEY_UP:
             upKeyDown = false;
             break;
@@ -660,8 +686,9 @@ function handleKeyUp(e){
         case SPACE_KEY:
             spaceKeyDown = false;
             break;
-    };
-    handleKey(upKeyDown,downKeyDown,spaceKeyDown,leftKeyDown,rightKeyDown);
+    }
+    ;
+    handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
 }
 
 /**
@@ -672,29 +699,29 @@ function handleKeyUp(e){
  * 当然子弹现在也是不能动的，后面的tick相应函数中会让它动起来。
  */
 
-function handleKey(upKeyDown,downKeyDown,spaceKeyDown,leftKeyDown,rightKeyDown) {
-    if(spaceKeyDown){
-        if(fireAble){
-            bullet = new createjs.Sprite(spriteSheet,"bullet");
+function handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown) {
+    if (spaceKeyDown) {
+        if (fireAble) {
+            bullet = new createjs.Sprite(spriteSheet, "bullet");
             bullet.x = player.x;
-            bullet.y = player.y+(player.getBounds().width)/2;
+            bullet.y = player.y + (player.getBounds().width) / 2;
             bullet.rotation = -90;
-            createjs.Tween.get(bullet).to({x:sWidth},6000,createjs.Ease.linear);
+            createjs.Tween.get(bullet).to({x: sWidth}, 6000, createjs.Ease.linear);
             fires.push(bullet);
             createjs.Sound.play("shot");
             stage.addChild(bullet);
         }
     }
-    if(upKeyDown){
+    if (upKeyDown) {
         player.y -= 20;
     }
-    if(downKeyDown){
+    if (downKeyDown) {
         player.y += 20;
     }
-    if(leftKeyDown){
+    if (leftKeyDown) {
         player.x -= 20;
     }
-    if(rightKeyDown){
+    if (rightKeyDown) {
         player.x += 20;
     }
 }
@@ -704,7 +731,7 @@ function handleKey(upKeyDown,downKeyDown,spaceKeyDown,leftKeyDown,rightKeyDown) 
  */
 function startGame() {
     createjs.Ticker.setFPS(fps);
-    createjs.Ticker.addEventListener('tick',function () {
+    createjs.Ticker.addEventListener('tick', function () {
         updateGame();//更新游戏元素的位置，更新分数等
         checkGame();//检查游戏中的元素是否发生碰撞，敌机被击落，还是飞出屏幕等等
         stage.update();
@@ -713,22 +740,23 @@ function startGame() {
 
 function updateGame() {
     updateStar();
+    updateFireEnemy();
 }
 
 function checkGame() {
-    
+
 }
 
 /**
  * 让星空背景的星星移动，透明度越高飞得越快
  */
 function updateStar() {
-    if(isPerfect){
-        var i,star,xPos;
-        for(i=0;i<200;i++){
+    if (isPerfect) {
+        var i, star, xPos;
+        for (i = 0; i < 200; i++) {
             star = starArr[i];
-            xPos = star.x - 5*star.alpha;
-            if(xPos <= 0){
+            xPos = star.x - 5 * star.alpha;
+            if (xPos <= 0) {
                 xPos = sWidth;
             }
             star.x = xPos;
@@ -736,36 +764,21 @@ function updateStar() {
     }
 }
 
+function updateFireEnemy(){
+    var i, nextY,fire;
+    for (i=0;i<firesEnemyArray.length;i++){
+        fire = firesEnemyArray[i];
+        nextY = fire.y - 10;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if(nextY == 0){//如果子弹飞出屏幕，在子弹数组中去掉，并在stage中删除元素
+            //splice方法表示从第i个元素开始删除1个元素(js方法)
+            firesEnemyArray.splice(i,1)
+            stage.removeChild(fire);
+            continue;
+        }
+        fire.y = nextY;
+    }
+}
 
 function openP() {
     isPerfect = true;
