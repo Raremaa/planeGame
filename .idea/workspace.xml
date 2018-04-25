@@ -10,9 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="280e0e6c-4363-49e0-99c3-f1394d3574d8" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/flyGo/js/ndgmr.Collision.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/web/js/option.js" beforeDir="false" afterPath="$PROJECT_DIR$/demo/web/js/option.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flyGo/images/fireEnemy.png" beforeDir="false" afterPath="$PROJECT_DIR$/flyGo/images/fireEnemy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flyGo/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/flyGo/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flyGo/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/flyGo/js/game.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,8 +42,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="13" column="93" selection-start-line="13" selection-start-column="93" selection-end-line="13" selection-end-column="93" />
+            <state relative-caret-position="64">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -48,23 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="288">
-                <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/flyGo/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="13" column="97" selection-start-line="13" selection-start-column="97" selection-end-line="13" selection-end-column="97" />
+            <state relative-caret-position="448">
+              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -75,8 +66,11 @@
       <file leaf-file-name="game.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/flyGo/js/game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="790" column="1" lean-forward="true" selection-start-line="790" selection-start-column="1" selection-end-line="790" selection-end-column="1" />
+            <state relative-caret-position="57">
+              <caret line="795" column="36" lean-forward="true" selection-start-line="795" selection-start-column="36" selection-end-line="795" selection-end-column="36" />
+              <folding>
+                <marker date="1524579458333" expanded="true" signature="24022:24023" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,8 +78,8 @@
       <file leaf-file-name="option.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/flyGo/css/option.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+            <state relative-caret-position="352">
+              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -93,8 +87,8 @@
       <file leaf-file-name="option.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/demo/web/js/option.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+            <state relative-caret-position="6752">
+              <caret line="211" column="8" selection-start-line="211" selection-start-column="8" selection-end-line="211" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -114,6 +108,7 @@
     <findStrings>
       <find>starArr</find>
       <find>speed</find>
+      <find>enemyClip</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -124,24 +119,24 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/demo/web/index.html" />
-        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
         <option value="$PROJECT_DIR$/demo/web/text.html" />
         <option value="$PROJECT_DIR$/demo/web/js/text.js" />
         <option value="$PROJECT_DIR$/demo/web/js/text.js" />
         <option value="$PROJECT_DIR$/flyGo/css/option.css" />
-        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
         <option value="$PROJECT_DIR$/demo/web/index.html" />
-        <option value="$PROJECT_DIR$/flyGo/js/game.js" />
-        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
         <option value="$PROJECT_DIR$/flyGo/css/option.css" />
-        <option value="$PROJECT_DIR$/flyGo/js/game.js" />
-        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
-        <option value="$PROJECT_DIR$/flyGo/js/game.js" />
-        <option value="$PROJECT_DIR$/flyGo/index.html" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/flyGo/index.html" />
-        <option value="$PROJECT_DIR$/flyGo/index.html" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
+        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
+        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
+        <option value="$PROJECT_DIR$/demo/web/js/option.js" />
+        <option value="$PROJECT_DIR$/flyGo/index.html" />
+        <option value="$PROJECT_DIR$/flyGo/index.html" />
+        <option value="$PROJECT_DIR$/flyGo/index.html" />
+        <option value="$PROJECT_DIR$/flyGo/js/game.js" />
+        <option value="$PROJECT_DIR$/flyGo/js/game.js" />
+        <option value="$PROJECT_DIR$/flyGo/js/game.js" />
       </list>
     </option>
   </component>
@@ -165,8 +160,8 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="917" />
-    <option name="y" value="61" />
+    <option name="x" value="555" />
+    <option name="y" value="24" />
     <option name="width" value="1111" />
     <option name="height" value="1046" />
   </component>
@@ -178,8 +173,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -208,13 +203,19 @@
               <item name="planeGame" type="b2602c69:ProjectViewProjectNode" />
               <item name="planeGame" type="462c0819:PsiDirectoryNode" />
               <item name="flyGo" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="planeGame" type="b2602c69:ProjectViewProjectNode" />
+              <item name="planeGame" type="462c0819:PsiDirectoryNode" />
+              <item name="flyGo" type="462c0819:PsiDirectoryNode" />
               <item name="sound" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -232,16 +233,16 @@
     <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="I:\planeGame\flyGo\sound" />
-      <recent name="I:\planeGame\flyGo\images" />
-      <recent name="I:\planeGame\flyGo\js" />
-      <recent name="I:\planeGame\demo\web\sound" />
-      <recent name="I:\planeGame\demo\web\js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="I:\planeGame\flyGo\images" />
       <recent name="I:\planeGame\demo\web\images" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="I:\planeGame\flyGo\js" />
+      <recent name="I:\planeGame\flyGo\images" />
+      <recent name="I:\planeGame\flyGo\sound" />
+      <recent name="I:\planeGame\demo\web\sound" />
+      <recent name="I:\planeGame\demo\web\js" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -352,7 +353,10 @@
       <workItem from="1524411829140" duration="217000" />
       <workItem from="1524463111932" duration="9428000" />
       <workItem from="1524486518662" duration="1212000" />
-      <workItem from="1524535190621" duration="6206000" />
+      <workItem from="1524535190621" duration="8311000" />
+      <workItem from="1524557938774" duration="11960000" />
+      <workItem from="1524621978927" duration="1208000" />
+      <workItem from="1524629209595" duration="1332000" />
     </task>
     <task id="LOCAL-00001" summary="4.24">
       <created>1524539320466</created>
@@ -389,14 +393,42 @@
       <option name="project" value="LOCAL" />
       <updated>1524542981000</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Merge branch 'master' of https://git.coding.net/masaiqi1996/planeGame&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
+      <created>1524543480688</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1524543480688</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Merge branch 'master' of https://git.coding.net/masaiqi1996/planeGame&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
+      <created>1524543488679</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1524543488679</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Merge branch 'master' of https://git.coding.net/masaiqi1996/planeGame&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
+      <created>1524543638648</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1524543638648</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Merge branch 'master' of https://git.coding.net/masaiqi1996/planeGame&#10;&#10;# Please enter a commit message to explain why this merge is necessary,&#10;# especially if it merges an updated upstream into a topic branch.&#10;#&#10;# Lines starting with '#' will be ignored, and an empty message aborts&#10;# the commit.">
+      <created>1524573810784</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1524573810784</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93095000" />
+    <option name="totallyTimeSpent" value="109700000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="71" y="-9" width="1858" height="1098" extended-state="6" />
+    <frame x="555" y="24" width="1111" height="1046" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="5" />
@@ -409,12 +441,12 @@
       <window_info anchor="bottom" id="Application Servers" order="1" weight="0.048167538" />
       <window_info anchor="right" id="Maven Projects" order="1" />
       <window_info anchor="bottom" id="Database Changes" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="6" visible="true" weight="0.32984293" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.32984293" />
       <window_info anchor="bottom" id="Run" order="9" weight="0.31099477" />
       <window_info anchor="bottom" id="Terminal" order="2" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="0" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.11847826" />
+      <window_info content_ui="combo" id="Project" order="5" weight="0.22757848" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info anchor="right" id="Database" order="2" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
@@ -426,11 +458,44 @@
       <window_info anchor="bottom" id="Messages" order="0" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="8" visible="true" weight="0.13842747" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="7" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="8" weight="0.2437972" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="bottom" id="Application Servers" order="1" weight="0.048167538" />
+      <window_info id="Designer" order="0" />
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="bottom" id="Run" order="9" weight="0.31099477" />
+      <window_info id="Image Layers" order="6" />
+      <window_info anchor="bottom" id="Find" order="8" visible="true" weight="0.2437972" />
+      <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
+      <window_info id="UI Designer" order="1" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="2" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="0" />
+      <window_info anchor="bottom" id="TODO" order="13" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Java Enterprise" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="5" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.32984293" />
+      <window_info anchor="right" id="Maven Projects" order="1" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.22757848" />
+      <window_info anchor="right" id="Database" order="2" />
+      <window_info anchor="bottom" id="Message" order="7" />
+      <window_info id="Web" order="4" side_tool="true" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="10" weight="0.4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -449,6 +514,94 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/flyGo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="10" column="67" selection-start-line="10" selection-start-column="67" selection-end-line="10" selection-end-column="67" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/css/option.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/web/js/option.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6752">
+          <caret line="211" column="8" selection-start-line="211" selection-start-column="8" selection-end-line="211" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18784">
+          <caret line="587" column="24" selection-start-line="587" selection-start-column="24" selection-end-line="587" selection-end-column="24" />
+          <folding>
+            <marker date="1524579458333" expanded="true" signature="24022:24023" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/web/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding>
+            <element signature="n#style#0;n#canvas#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="13" column="79" selection-start-line="13" selection-start-column="79" selection-end-line="13" selection-end-column="79" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22528">
+          <caret line="704" column="28" selection-start-line="704" selection-start-column="28" selection-end-line="704" selection-end-column="28" />
+          <folding>
+            <marker date="1524579458333" expanded="true" signature="24022:24023" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/css/option.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/web/js/option.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="4" column="30" lean-forward="true" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/demo/web/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
@@ -701,17 +854,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyGo/css/option.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/demo/web/js/option.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="384">
+            <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -725,40 +874,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flyGo/js/game.js">
+    <entry file="file://$PROJECT_DIR$/flyGo/css/option.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="790" column="1" lean-forward="true" selection-start-line="790" selection-start-column="1" selection-end-line="790" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flyGo/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="13" column="97" selection-start-line="13" selection-start-column="97" selection-end-line="13" selection-end-column="97" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="352">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="13" column="93" selection-start-line="13" selection-start-column="93" selection-end-line="13" selection-end-column="93" />
+        <state relative-caret-position="64">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding>
             <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="288">
-            <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/demo/web/js/option.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6752">
+          <caret line="211" column="8" selection-start-line="211" selection-start-column="8" selection-end-line="211" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/js/ndgmr.Collision.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-704">
+          <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/js/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="795" column="36" lean-forward="true" selection-start-line="795" selection-start-column="36" selection-end-line="795" selection-end-column="36" />
+          <folding>
+            <marker date="1524579458333" expanded="true" signature="24022:24023" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flyGo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

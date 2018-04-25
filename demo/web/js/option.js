@@ -188,9 +188,9 @@
         if(fireAble){
             var fire = new createjs.Shape();
             //不加endFill在处理多个图形会遇到问题
-            fire.graphics.beginFill("#FF0").drawRect(0,0,2,5).endFill();
-            fire.x = player.x + 18;
-            fire.y = 658;
+            fire.graphics.beginFill("#FF0").drawRect(player.x + 18,658,2,5).endFill();
+            // fire.x = player.x + 18;
+            // fire.y = 658;
             createjs.Sound.play("shot");
             fires.push(fire);
             stage.addChild(fire);
@@ -304,7 +304,6 @@
                 nextX = sWidth - 37;
             }
         }
-
         player.x = nextX;
     }
 
