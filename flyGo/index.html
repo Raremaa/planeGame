@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>马赛琦的FlyGo之旅</title>
+    <!--CreateJS包-->
     <script src="./js/createjs.min.js"></script>
+    <!--碰撞检测包-->
+    <script src="./js/ndgmr.Collision.js"></script>
+    <!--自定义样式-->
     <link rel="stylesheet" type="text/css" href="./css/option.css">
 </head>
 <body onload="init()">
     <canvas id="game" width="1000" height="600"></canvas>
     <button id="b1" onclick="openP()">点我开启高画质</button>
     <button id="b2" onclick="closeP()">点我关闭高画质(老年机)</button>
-    <script src="./js/game.js"></script>
     <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+    <!--游戏核心JS文件-->
+    <script src="./js/game.js"></script>
 </body>
 </html>
