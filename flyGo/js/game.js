@@ -11,28 +11,27 @@ var rightKeyDown = false;//右按键状态
 var spaceKeyDown = false;//空格状态
 var starArr = new Array;//存星空背景的星星Shape对象
 var player;//战机对象
-var speed = 30;//速度
+var speed = 5;//速度
 var fires = new Array();//子弹Shape(每次事件触发一次push)
 var score = 0; //得分
 var lives = 5;//生命值
 var bullet;
 var enemy = new Array();//障碍
 var fireAble = true; //是否可开火
-var breakAble = true; //是否战机被毁
 var enemyClip = new Array;//敌机Sprite,一共2
 var sWidth;//canvas宽度
 var sHeight;//canvas高度
 var starSky;//星空背景
 var queue;//preload插件实现预加载类
 var spriteSheet;//雪碧图
-var part = 1;//游戏关卡
 var isPerfect = true;//是否开启高画质
 var fps = 60; //fps
-var radishS; //萝卜
+var radishS; //星球
 var enemyScore = new Array();//算分数的敌机
 var livesText;//生命值文本对象
 var scoreText;//分数文本对象
-//游戏资源实现：
+var scoreMax = 0;//玩家最高分
+var runAble = true;//是否可移动
 
 /**
  * 预加载游戏所需资源
@@ -116,13 +115,14 @@ function buildMsg() {
     stage.addChild(livesText);
 
     scoreText = new createjs.Text("score:" + score, "40px console", "#FFF");
-    scoreText.x = 860;
+    scoreText.x = 800;
     scoreText.y = 10;
     stage.addChild(scoreText);
 }
 
 /**
  * 根据雪碧图创建游戏图片资源
+ * 这里我采用的制作好的雪碧图，有一些多于的资源和SpriteSheet，供后期完善
  */
 function buildSpriteSheet() {
     var data = {
@@ -544,7 +544,7 @@ function buildSpriteSheet() {
 }
 
 /**
- * 创建玩家战机
+ * 创建玩家战机并放入舞台之中
  */
 function buildPlayer() {
     player = new createjs.Sprite(spriteSheet, "heroIdle");
@@ -559,10 +559,10 @@ function buildPlayer() {
 }
 
 /**
- * 创建敌机，将多个敌机放入数组enemyClip中
+ * 创建敌人，将多个敌人放入数组enemyClip中
  *  e1,e2:飞机
- *  e3,e4,e5,e6:石头
- *  e7:萝卜
+ *  e3,e4,e5,e6:陨石
+ *  e7:星球
  */
 function buildEnemy() {
     var e1, e2, e3, e4, e5, e6,e7;
@@ -577,15 +577,18 @@ function buildEnemy() {
     e7 = new createjs.Sprite(radishS,"radish");
     e7.rotation = -90;
     enemyClip.push(e1, e2, e3, e4, e5, e6, e7);
-    enemyScore.push(e1,e2);
     buildEnemies();
 }
 
 /**
- *将enemyClip,enemyScore中的敌机对象拆出放入舞台
+ *将enemyClip中的敌人对象通过随机算法放入舞台中
+ *  随机算法从上下两侧产生敌机
+ *  随机算法从最右侧产生敌机
+ *  随机算法从最右侧产生陨石
+ *  随机算法从最顶部产生星球
+ *  这里的算法各不相同
  *
- *
- * 生成min~max之间的随机数公式：b jMath.floor(Math.random()*(max-min+1)+min)
+ * ===生成min~max之间的随机数公式：b jMath.floor(Math.random()*(max-min+1)+min)===
  */
 function buildEnemies() {
     var i, temp;
@@ -594,23 +597,25 @@ function buildEnemies() {
         //firesEnemy = new createjs.Sprite(firesEnemySprite, "fireE");//子弹Shape
         //随机从上下两侧产生飞机
         temp = Math.floor(Math.random() * 2);
-        enemyScore[temp].x = Math.floor(Math.random() * 501 + 500);//x坐标随机300~1000之间
+        enemyClip[temp].x = Math.floor(Math.random() * 501 + 500);//x坐标随机300~1000之间
         var tempY = Math.random() * 600;
         if (temp == 0) {
-            enemyScore[temp].y = -(enemyScore[temp].getBounds().width);
+            enemyClip[temp].y = -(enemyClip[temp].getBounds().width);
         } else {
-            enemyScore[temp].y = 600;
+            enemyClip[temp].y = 600;
         }
-        var en = enemyScore[temp].clone();
+        var en = enemyClip[temp].clone();
+        enemyScore.push(en);
         enemy.push(en);
         createjs.Tween.get(en).wait(5000 * i).to({x: 0, y: tempY}, 6000, createjs.Ease.sineInOut(-2));
         stage.addChild(en);
 
         //随机从最右侧产生飞机
         temp = Math.floor(Math.random() * 2);
-        enemyScore[temp].x = Math.floor(Math.random() * enemyScore[temp].getBounds().height + 1050);//x坐标随机1000~1000+敌机长度之间
-        enemyScore[temp].y = Math.floor(Math.random() * (601 + enemyScore[temp].getBounds().width) - enemyScore[temp].getBounds().width);
-        var en = enemyScore[temp].clone();
+        enemyClip[temp].x = Math.floor(Math.random() * enemyClip[temp].getBounds().height + 1050);//x坐标随机1000~1000+敌机长度之间
+        enemyClip[temp].y = Math.floor(Math.random() * (601 + enemyClip[temp].getBounds().width) - enemyClip[temp].getBounds().width);
+        var en = enemyClip[temp].clone();
+        enemyScore.push(en);
         enemy.push(en);
         createjs.Tween.get(en).wait(5000 * i).to({x: 0, y: Math.random() * 600}, 6000, createjs.Ease.circInOut(-2));
         stage.addChild(en);
@@ -626,20 +631,20 @@ function buildEnemies() {
         createjs.Tween.get(en).wait(2000 * i).to({x: -300}, 5000-100*i, createjs.Ease.linear);
         stage.addChild(en);
     }
-    //随机产生星球
-    for(i=0;i<50;i++){
-        temp = 6;
-        enemyClip[temp].x = Math.floor(Math.random()*1000);
-        enemyClip[temp].y = 0;
-        var en = enemyClip[temp].clone();
-        enemy.push(en);
-        createjs.Tween.get(en).wait(2000 * i).to({x: -150, y:Math.random()*600}, 5000-100*i, createjs.Ease.circInOut(-2));
-        stage.addChild(en);
-    }
+    // //随机产生星球
+    // for(i=0;i<50;i++){
+    //     temp = 6;
+    //     enemyClip[temp].x = Math.floor(Math.random()*1000);
+    //     enemyClip[temp].y = 0;
+    //     var en = enemyClip[temp].clone();
+    //     enemy.push(en);
+    //     createjs.Tween.get(en).wait(2000 * i).to({x: -150, y:Math.random()*600}, 5000-100*i, createjs.Ease.circInOut(-2));
+    //     stage.addChild(en);
+    // }
 }
 
 /**
- * 通过键盘操作执行相应反馈
+ * 按键控制记录
  *
  * handleKeyDown 按下键盘
  * handleKeyUp 松开键盘
@@ -650,7 +655,7 @@ function setControl() {
 }
 
 /**
- * 通过按下键盘操作做出反馈
+ * 记录按下的按键
  */
 function handleKeyDown(e) {
     //是为了更好的兼容IE浏览器和非ie浏览器。
@@ -670,14 +675,15 @@ function handleKeyDown(e) {
             break;
         case SPACE_KEY:
             spaceKeyDown = true;
+            playFire();
             break;
     }
     ;
-    handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
+    // handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
 }
 
 /**
- * 通过松开键盘操作做出反馈
+ * 记录松开的按键
  */
 function handleKeyUp(e) {
     e = !e ? window.event : e;
@@ -696,79 +702,84 @@ function handleKeyUp(e) {
             break;
         case SPACE_KEY:
             spaceKeyDown = false;
+            playFire();
             break;
-    }
-    ;
-    handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
+    };
+    // handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
 }
 
 /**
- * 按下空格，发射一枚子弹
- * fireAble是一个bool值，默认是true，当玩家飞机被摧毁后，有段时间是处于无敌状态然后把fireAble设置为false，
- * 无敌状态不能发射子弹，createjs.Sound.play("shot");可以直接调用你在preload中载入的声音，不需要像explosion.mp3一样，
- * 使用前需要注册，这样每次按键都会播放一次发射的声音，并产生一个白色的子弹，
- * 当然子弹现在也是不能动的，后面的tick相应函数中会让它动起来。
+ * 发射子弹(按空格键)
  */
 
-function handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown) {
+function playFire() {
     if (spaceKeyDown) {
         if (fireAble) {
             bullet = new createjs.Sprite(spriteSheet, "bullet");
             bullet.x = player.x;
             bullet.y = player.y + (player.getBounds().width) / 2;
             bullet.rotation = -90;
-            createjs.Tween.get(bullet).to({x: sWidth}, 6000, createjs.Ease.linear);
+            createjs.Tween.get(bullet).to({x: sWidth}, 4000, createjs.Ease.linear);
             fires.push(bullet);
             createjs.Sound.play("shot");
             stage.addChild(bullet);
-        }
-    }
-    if (upKeyDown) {
-        if(player.y>0){
-            player.y -= speed;
-        }
-    }
-    if (downKeyDown) {
-        if(player.y<600-player.getBounds().width){
-            player.y += speed;
-        }
-    }
-    if (leftKeyDown) {
-        if(player.x>player.getBounds().height){
-            player.x -= speed;
-        }
-    }
-    if (rightKeyDown) {
-        if(player.x<1000){
-            player.x += speed;
         }
     }
 }
 
 /**
  * 开始游戏
+ * 初始化生命值与分数
  */
 function startGame() {
+    lives = 5;
+    score = 0;
     createjs.Ticker.setFPS(fps);
     createjs.Ticker.addEventListener('tick', function () {
-        updateGame();//更新游戏元素的位置，更新分数等
-        checkGame();//检查游戏中的元素是否发生碰撞，敌机被击落，还是飞出屏幕等等
-        stage.update();
+        updateGame();//更新游戏元素，对相应事件做出响应
+        checkGame();//检查游戏状态，在玩家无生命值或无任何敌人时结束游戏
+        stage.update();//刷新舞台
     });
 }
 
 /**
  * 更新游戏
+ * 飞机移动指令放在了这个模块而没有放在资源准备模块是因为采用Tick事件可以让飞机移动更流畅(设置了FPS)
+ * 子弹放在了资源准备模块是出于子弹是否在Tick事件内并不会对其造成影响(小资源)
  */
 function updateGame() {
     updateStar();//动态星空背景
     updateEnemy();//敌机碰撞检测，刷新敌机
-    // updateFire();
-    updateMsg();
+    updateMsg();//计分板更新声明和分数
+    updatePlayer();//根据按键做出相应
 }
 
-function checkGame() {
-
+/**
+ * 根据按键做出相应
+ */
+function updatePlayer() {
+    if (runAble) {
+        if (upKeyDown) {
+            if (player.y > 0) {
+                player.y -= speed;
+            }
+        }
+        if (downKeyDown) {
+            if (player.y < 600 - player.getBounds().width) {
+                player.y += speed;
+            }
+        }
+        if (leftKeyDown) {
+            if (player.x > player.getBounds().height) {
+                player.x -= speed;
+            }
+        }
+        if (rightKeyDown) {
+            if (player.x < 1000) {
+                player.x += speed;
+            }
+        }
+    }
 }
 
 /**
@@ -789,116 +800,127 @@ function updateStar() {
 }
 
 /**
- * 敌机与子弹碰撞检测
+ * 碰撞检测
+ * 检测一：检测战机是否与敌人发生碰撞并做出相应响应
+ * 检测二：检测子弹是否与敌人发生碰撞(这里只统计敌机，也就是算分数的敌人，陨石和星球不算分数)
  */
 function updateEnemy(){
-    var i, j,fireTemp,enemyTemp,enemyScoreTemp,collision;
-    var fires_length = fires.length;
-    var enemy_length = enemy.length;
-    var enemyScore_length =enemyScore.length;
-    for(i=0;i<fires_length;i++){
-        for(j=0;j<enemyScore_length;j++){
-            fireTemp = fires[i];
-            enemyScoreTemp = enemyScore[j];
-            collision = ndgmr.checkPixelCollision(enemyScoreTemp, fireTemp);
-            if(collision){
-                score += 10;
-                fires.splice(i,1);
-                            enemy.splice(j,1);
-                            j-=1;i-=1;fires_length-=1;enemyScore_length-=1;
-                            stage.removeChild(fireTemp);
-                            stage.removeChild(enemyScoreTemp);
-                            createjs.Sound.play("explosion");
-                            var exp1 = new createjs.Sprite(spriteSheet,"explosion");
-                            exp1.x = enemyScoreTemp.x;
-                            exp1.y = enemyScoreTemp.y;
-                            //这一块有问题
-                            exp1.addEventListener('animationend',function(e){
-                                stage.removeChild(e.target);
-                            });
-                            stage.addChild(exp1);
+    var i, j,fireTemp,enemyScoreTemp;
+
+    //检测战机是否与敌人发生碰撞
+    for(i=0;i<enemy.length;i++){
+        try {
+            var temp = enemy[i];
+            if(player != null && temp != null && player != "" && temp != ""){
+                var collision = ndgmr.checkPixelCollision(player, temp);
             }
+        } catch (e) {
+            collision = false;
         }
+            if (collision){
+                lives -= 1;
+                stage.removeChild(player);
+                var heroHit = new createjs.Sprite(spriteSheet, "heroHit");
+                heroHit.x = player.x;
+                heroHit.y = player.y;
+                heroHit.rotation = 90;
+                player.x = -9999;
+                player.y = -9999;
+                fireAble = false;
+                runAble = false;
+                //爆炸动画完成清除动画
+                stage.removeChild(enemy[i]);
+                heroHit.addEventListener('animationend', function (e) {
+                    stage.removeChild(e.target);
+                });
+                stage.addChild(heroHit);
+                var setTime = setTimeout(function () {
+                    buildPlayer();
+                    fireAble = true;
+                    runAble = true;
+                }, 1000);
+                break;
+                collision = false;
+            }
     }
 
 
 
-    // var collision = ndgmr.checkPixelCollision()
-    //
-    //
-    //
-    // var i, j,fire,enemy1;
-    // var loop1 = fires.length;
-    // var loop2 = enemy.length;
-    // for(i=0;i<loop1;i++){
-    //     for(j=0;j<loop2;j++){
-    //         fire = fires[i];
-    //         enemy1 = enemy[j];
-    //         var fx = fire.x;
-    //         var fy = fire.y;
-    //         var ex = enemy1.x;
-    //         var ey = enemy1.y;
-    //         // var ew = enemy1.getBounds().width;
-    //         // var eh = enemy1.getBounds().height;
-    //
-    //         if(fy < ey+eh && fy > ey && fx>ex && fx<ex+ew && ey > 0){
-    //             score += 10;
-    //             fires.splice(i,1);
-    //             enemy.splice(j,1);
-    //             j-=1;i-=1;loop1-=1;loop2-=1;
-    //             stage.removeChild(fire);
-    //             stage.removeChild(enemy1);
-    //             createjs.Sound.play("boom");
-    //             var exp1 = new createjs.Sprite(spriteSheet,"exp");
-    //             exp1.x = ex;
-    //             exp1.y = ey;
-    //             //这一块有问题
-    //             exp1.addEventListener('animationend',function(e){
-    //                 stage.removeChild(e.target);
-    //             });
-    //             stage.addChild(exp1);
-    //
-    //         }
-    //     }
-    // }
+    //检测子弹是否碰到敌机(加分与撞毁)
+    for(i=0;i<fires.length;i++){
+        for(j=0;j<enemyScore.length;j++){
+            fireTemp = fires[i];
+            enemyScoreTemp = enemyScore[j];
+            try {
+                var fx = fireTemp.x;
+                var fy = fireTemp.y;
+                var ex = enemyScoreTemp.x;
+                var ey = enemyScoreTemp.y;
+                var ew = enemyScoreTemp.getBounds().width;
+                var eh = enemyScoreTemp.getBounds().height;
+            }
+            catch (e){
+                break;
+                //splice清除会造成fireTemp.property的空指针异常
+                //splice已经清除内循环遍历对象的前提下，直接跳出内循环，提高效率；
+            };
+
+
+            if(fy<(ey+ew) && fy>ey && fx<ex && fx>(ex-eh)){
+                score += 10;
+                fires.splice(i,1);
+                enemyScore.splice(j,1);
+                //j-=1;i-=1;fires.length-=1;enemyScore.length-=1;
+                stage.removeChild(fireTemp);
+                stage.removeChild(enemyScoreTemp);
+                createjs.Sound.play("explosion");
+                var exp1 = new createjs.Sprite(spriteSheet,"explosion");
+                exp1.x = ex;
+                exp1.y = ey;
+                //爆炸动画完成清除动画
+                exp1.addEventListener('animationend',function(e){
+                    stage.removeChild(e.target);
+                });
+                stage.addChild(exp1);
+
+            }
+        }
+    }
 }
-//更新分数和剩余生命值
+
+/**
+ * 计分板更新分数和剩余生命值
+ */
+
 function updateMsg(){
     scoreText.text = "score:" + score;
     livesText.text = "lives:" + lives;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * 开启高画质
+ * 提高FPS
+ */
 function openP() {
     isPerfect = true;
     fps = 60;
 }
 
+/**
+ *关闭高画质
+ * 降低FPS
+ */
 function closeP() {
     isPerfect = false;
     fps = 30;
+}
+
+/**
+ * 检查游戏状态，在玩家无生命值或无任何敌人时结束游戏
+ */
+function checkGame() {
+    if (lives <= 0){
+        scoreMax = scoreMax>score ? scoreMax:score;
+        //alert("游戏结束，您的最终得分是"+scoreMax);
+    }
 }
