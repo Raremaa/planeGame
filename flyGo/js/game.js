@@ -32,6 +32,7 @@ var livesText;//生命值文本对象
 var scoreText;//分数文本对象
 var scoreMax = 0;//玩家最高分
 var runAble = true;//是否可移动
+var collision = false;//是否发生碰撞
 
 /**
  * 预加载游戏所需资源
@@ -537,7 +538,7 @@ function buildSpriteSheet() {
             [0, 0, 142, 140, 0, 0, 0]
         ],
         animations: {
-            "radish" : 0
+            "radish": 0
         }
     };
     radishS = new createjs.SpriteSheet(data2);
@@ -565,7 +566,7 @@ function buildPlayer() {
  *  e7:星球
  */
 function buildEnemy() {
-    var e1, e2, e3, e4, e5, e6,e7;
+    var e1, e2, e3, e4, e5, e6, e7;
     e1 = new createjs.Sprite(spriteSheet, "enemy1Idle");
     e2 = new createjs.Sprite(spriteSheet, "enemy2Idle");
     e1.rotation = 90;
@@ -574,7 +575,7 @@ function buildEnemy() {
     e4 = new createjs.Sprite(spriteSheet, "asteroid2");
     e5 = new createjs.Sprite(spriteSheet, "asteroid3");
     e6 = new createjs.Sprite(spriteSheet, "asteroid4");
-    e7 = new createjs.Sprite(radishS,"radish");
+    e7 = new createjs.Sprite(radishS, "radish");
     e7.rotation = -90;
     enemyClip.push(e1, e2, e3, e4, e5, e6, e7);
     buildEnemies();
@@ -607,7 +608,7 @@ function buildEnemies() {
         var en = enemyClip[temp].clone();
         enemyScore.push(en);
         enemy.push(en);
-        createjs.Tween.get(en).wait(5000 * i).to({x: 0, y: tempY}, 6000, createjs.Ease.sineInOut(-2));
+        createjs.Tween.get(en).wait(5000 * i).to({x: -300, y: tempY}, 6000, createjs.Ease.sineInOut(-2));
         stage.addChild(en);
 
         //随机从最右侧产生飞机
@@ -617,20 +618,20 @@ function buildEnemies() {
         var en = enemyClip[temp].clone();
         enemyScore.push(en);
         enemy.push(en);
-        createjs.Tween.get(en).wait(5000 * i).to({x: 0, y: Math.random() * 600}, 6000, createjs.Ease.circInOut(-2));
+        createjs.Tween.get(en).wait(5000 * i).to({x: -300, y: Math.random() * 600}, 6000, createjs.Ease.circInOut(-2));
         stage.addChild(en);
 
     }
-    //随机产生陨石
-    for(i=0;i<50;i++){
-        temp = Math.floor(Math.random()*4+2);
-        enemyClip[temp].x = 1250;
-        enemyClip[temp].y = Math.floor(Math.random()*600);
-        var en = enemyClip[temp].clone();
-        enemy.push(en);
-        createjs.Tween.get(en).wait(2000 * i).to({x: -300}, 5000-100*i, createjs.Ease.linear);
-        stage.addChild(en);
-    }
+    // //随机产生陨石
+    // for (i = 0; i < 50; i++) {
+    //     temp = Math.floor(Math.random() * 4 + 2);
+    //     enemyClip[temp].x = 1250;
+    //     enemyClip[temp].y = Math.floor(Math.random() * 600);
+    //     var en = enemyClip[temp].clone();
+    //     enemy.push(en);
+    //     createjs.Tween.get(en).wait(2000 * i).to({x: -300}, 5000 - 100 * i, createjs.Ease.linear);
+    //     stage.addChild(en);
+    // }
     // //随机产生星球
     // for(i=0;i<50;i++){
     //     temp = 6;
@@ -704,7 +705,8 @@ function handleKeyUp(e) {
             spaceKeyDown = false;
             playFire();
             break;
-    };
+    }
+    ;
     // handleKey(upKeyDown, downKeyDown, spaceKeyDown, leftKeyDown, rightKeyDown);
 }
 
@@ -804,51 +806,80 @@ function updateStar() {
  * 检测一：检测战机是否与敌人发生碰撞并做出相应响应
  * 检测二：检测子弹是否与敌人发生碰撞(这里只统计敌机，也就是算分数的敌人，陨石和星球不算分数)
  */
-function updateEnemy(){
-    var i, j,fireTemp,enemyScoreTemp;
+function updateEnemy() {
+    var i, j, fireTemp, enemyScoreTemp;
 
     //检测战机是否与敌人发生碰撞
-    for(i=0;i<enemy.length;i++){
+    for (i = 0; i < enemy.length; i++) {
+        var temp = enemyScore[i];
+        var px = player.x - player.getBounds().height;
+        var py = player.y;
+        var pw = player.getBounds().height;
+        var ph = player.getBounds().width;
+
         try {
-            var temp = enemy[i];
-            if(player != null && temp != null && player != "" && temp != ""){
-                var collision = ndgmr.checkPixelCollision(player, temp);
-            }
+            var ex = temp.x - temp.getBounds().height;
+            var ey = temp.y;
+            var ew = temp.getBounds().height;
+            var eh = temp.getBounds().width;
         } catch (e) {
-            collision = false;
+            continue;
         }
-            if (collision){
-                lives -= 1;
-                stage.removeChild(player);
-                var heroHit = new createjs.Sprite(spriteSheet, "heroHit");
-                heroHit.x = player.x;
-                heroHit.y = player.y;
-                heroHit.rotation = 90;
-                player.x = -9999;
-                player.y = -9999;
-                fireAble = false;
-                runAble = false;
-                //爆炸动画完成清除动画
-                stage.removeChild(enemy[i]);
-                heroHit.addEventListener('animationend', function (e) {
-                    stage.removeChild(e.target);
-                });
-                stage.addChild(heroHit);
-                var setTime = setTimeout(function () {
-                    buildPlayer();
-                    fireAble = true;
-                    runAble = true;
-                }, 1000);
-                break;
-                collision = false;
-            }
+
+        if((ex>px&&ex-px<pw)&&(ey>py&&ey-py<ph)
+            || (ex<px&&px-ex<ew)&&(ey<py&&py-ey<eh)
+            || (ex<px&&px-ex<ew)&&(ey>py&&ey-py<ph)
+            || (ex>px&&ex-px<pw)&&(ey<py&&py-ey<eh)){
+            collision = true;
+        }
+        // try {
+        //     collision = ndgmr.checkPixelCollision(player, temp);
+        // } catch (e) {
+        //     console.log(e);
+        // }
+        if (collision) {
+            console.log("px="+px);
+            console.log("py="+py);
+            console.log("pw="+pw);
+            console.log("ph="+ph);
+            console.log("ex="+ex);
+            console.log("ey="+ey);
+            console.log("ew="+ew);
+            console.log("eh="+eh);
+            lives -= 1;
+            stage.removeChild(player);
+            var heroHit = new createjs.Sprite(spriteSheet, "heroHit");
+            heroHit.x = player.x;
+            heroHit.y = player.y;
+            heroHit.rotation = 90;
+            player.x = -9999;
+            player.y = -9999;
+            fireAble = false;
+            runAble = false;
+            //清除动画
+            stage.removeChild(enemy[i]);
+            heroHit.addEventListener('animationend', function (e) {
+                stage.removeChild(e.target);
+            });
+            stage.addChild(heroHit);
+            var setTime = setTimeout(function () {
+                player = new createjs.Sprite(spriteSheet, "heroIdle");
+                player.rotation = 90;
+                player.x = 100;
+                player.y = (sHeight / 2) - ((player.getBounds().width) / 2);
+                stage.addChild(player);
+                fireAble = true;
+                runAble = true;
+            }, 1000);
+            collision = false;
+            break;
+        }
+
     }
 
-
-
     //检测子弹是否碰到敌机(加分与撞毁)
-    for(i=0;i<fires.length;i++){
-        for(j=0;j<enemyScore.length;j++){
+    for (i = 0; i < fires.length; i++) {
+        for (j = 0; j < enemyScore.length; j++) {
             fireTemp = fires[i];
             enemyScoreTemp = enemyScore[j];
             try {
@@ -859,26 +890,27 @@ function updateEnemy(){
                 var ew = enemyScoreTemp.getBounds().width;
                 var eh = enemyScoreTemp.getBounds().height;
             }
-            catch (e){
+            catch (e) {
                 break;
                 //splice清除会造成fireTemp.property的空指针异常
                 //splice已经清除内循环遍历对象的前提下，直接跳出内循环，提高效率；
-            };
+            }
+            ;
 
 
-            if(fy<(ey+ew) && fy>ey && fx<ex && fx>(ex-eh)){
+            if (fy < (ey + ew) && fy > ey && fx < ex && fx > (ex - eh)) {
                 score += 10;
-                fires.splice(i,1);
-                enemyScore.splice(j,1);
+                fires.splice(i, 1);
+                enemyScore.splice(j, 1);
                 //j-=1;i-=1;fires.length-=1;enemyScore.length-=1;
                 stage.removeChild(fireTemp);
                 stage.removeChild(enemyScoreTemp);
                 createjs.Sound.play("explosion");
-                var exp1 = new createjs.Sprite(spriteSheet,"explosion");
+                var exp1 = new createjs.Sprite(spriteSheet, "explosion");
                 exp1.x = ex;
                 exp1.y = ey;
                 //爆炸动画完成清除动画
-                exp1.addEventListener('animationend',function(e){
+                exp1.addEventListener('animationend', function (e) {
                     stage.removeChild(e.target);
                 });
                 stage.addChild(exp1);
@@ -892,7 +924,7 @@ function updateEnemy(){
  * 计分板更新分数和剩余生命值
  */
 
-function updateMsg(){
+function updateMsg() {
     scoreText.text = "score:" + score;
     livesText.text = "lives:" + lives;
 }
@@ -919,8 +951,20 @@ function closeP() {
  * 检查游戏状态，在玩家无生命值或无任何敌人时结束游戏
  */
 function checkGame() {
-    if (lives <= 0){
-        scoreMax = scoreMax>score ? scoreMax:score;
+    if (lives <= 0) {
+        scoreMax = scoreMax > score ? scoreMax : score;
         //alert("游戏结束，您的最终得分是"+scoreMax);
+    }
+    for(var i = 0;i<enemy.length;i++){
+        if (enemy[i].x<0 || enemy[i].y>600){
+            stage.removeChild(enemy[i]);
+            enemy.splice(i,1);
+            console.log("===================================");
+            console.log("x="+enemy[i].x);
+            console.log("y="+enemy[i].y);
+            console.log("size="+enemy.length);
+            console.log("===================================");
+
+        }
     }
 }
