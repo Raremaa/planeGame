@@ -1,12 +1,29 @@
 #game{
     background-color: black;
+    display: block;
 }
 
-#b1{
-    width: 100px;
-    height: 100px;
-}
+
 #b2{
     width: 100px;
     height: 100px;
 }
+
+.left_div{
+    float: left;
+}
+
+.right_div{
+    float: right;
+}
+
+.footer_div{
+    position: fixed;
+    bottom: 0px;
+    text-align: center;
+}
+
+#footer{
+    text-align: center;
+}
+
