@@ -48,7 +48,7 @@ function init() {
     queue = new createjs.LoadQueue();
     createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);//注册声音,可进行预加载与回放
     queue.installPlugin(createjs.Sound);
-    queue.on("fileload", progressWaiting);
+    queue.on("progress", handleProgress);
     queue.on("complete", handleComplete);
     queue.loadManifest([
         {id: "sprite", src: "./images/sprite.png"},
@@ -59,23 +59,69 @@ function init() {
     ]);
 }
 
-function progressWaiting() {
+function handleProgress() {
+    var canvas = document.getElementById("game");
+    var context = canvas.getContext("2d");
+
+    //一共五个资源需要加载，需显示标题，进度条和状态提示
     if(flag == 0){
-        console.log("雪碧图加载完毕");
+        //标题
+        context.font="50px Verdana";
+        // 创建渐变
+        var gradient=context.createLinearGradient(330,250,670,250);
+        gradient.addColorStop("0","magenta");
+        gradient.addColorStop("0.5","blue");
+        gradient.addColorStop("1.0","red");
+        // 用渐变填色
+        context.fillStyle=gradient;
+        context.fillText("flyGo 正在装载！",330,250);
+
+        //进度条
+        context.moveTo(0,500);
+        context.lineTo(200,500);
+        //进度条下方文字提示
+        context.font = "20px Georgia";
+        context.fillStyle = "#FFF";
+        context.fillText("雪碧图正在加载",700,550);
     }
     if(flag == 1){
-        console.log("星球加载完毕");
+        context.moveTo(200,500);
+        context.lineTo(400,500);
+        //清除之前的状态信息
+        context.clearRect(700,500,1000,600);
+        context.fillStyle = "#FFF";
+        context.fillText("星球资源正在加载",700,550);
     }
     if(flag == 2){
-        console.log("枪声音效加载完毕");
+        context.moveTo(400,500);
+        context.lineTo(600,500);
+        //清除之前的状态信息
+        context.clearRect(700,500,1000,600);
+        context.fillStyle = "#FFF";
+        context.fillText("子弹音效正在加载",700,550);
     }
     if(flag == 3){
-        console.log("爆炸音效加载完毕");
+        context.moveTo(600,500);
+        context.lineTo(800,500);
+        //清除之前的状态信息
+        context.clearRect(700,500,1000,600);
+        context.fillStyle = "#FFF";
+        context.fillText("爆炸音效正在加载",700,550);
     }
     if(flag == 4){
-        console.log("背景音乐音效加载完毕");
+        context.moveTo(800,500);
+        context.lineTo(1000,500);
+        //清除之前的状态信息
+        context.clearRect(700,500,1000,600);
+        context.fillStyle = "#FFF";
+        context.fillText("背景音效正在加载",700,550);
     }
-    flag++;
+    flag++;//进度
+    //设置进度条样式
+    context.lineWidth = 10;
+    context.strokeStyle = "#FFFF00";
+    //绘制进度条
+    context.stroke();
 }
 
 
