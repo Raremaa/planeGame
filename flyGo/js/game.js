@@ -129,6 +129,7 @@ function handleProgress() {
  * 预加载完成后进行游戏资源配置
  */
 function handleComplete() {
+    createjs.Sound.play("bgm",{loop:-1});
     buildGame();//创建游戏界面，星空，玩家飞机，敌机，计分板等
     setControl();//设置按键控制，让玩家可以左右移动并发射子弹
     startGame();//进入游戏循环，使用tick事件实现游戏的变化，发展
@@ -165,7 +166,6 @@ function buildSpace() {
         starSky.addChild(star);
         starArr.push(star);
         stage.addChild(starSky);
-        createjs.Sound.play("bgm",{loop:-1});
     }
 }
 
