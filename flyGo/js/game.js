@@ -1072,4 +1072,13 @@ function checkGame() {
             enemy.splice(i,1);
         }
     }
+    if(enemy.length == 0){
+        createjs.Sound.stop();
+        stage.removeAllChildren();
+        var text = new createjs.Text("恭喜通关！您最终得分为:"+score, "30px Arial", "#ff4400");
+        text.x = 330;
+        text.y = 250;
+        stage.addChild(text);
+        stage.update();
+    }
 }
